@@ -15,7 +15,7 @@ import cv2
 
 DSIZE = 8         # descriptor size
 N_MIN_MATCH = 8   # minimum number of point matches
-
+np.object = np.object_
 
 def gaussian_filter(img, sigma=1.0):
     """Compute the kernel size from sigma and smooths the image."""
