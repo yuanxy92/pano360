@@ -132,7 +132,7 @@ def params_to_camera(params):
     """Convert the camera parameters to rotation / calibration matrix."""
     foc, x_c, y_c = params[:3]
     return Image(None, rotation_to_mat(params[3:]),
-                 intrinsics(foc, (x_c, y_c)))
+                intrinsics(foc, (x_c, y_c)))
 
 
 def camera_to_params(camera):
@@ -166,7 +166,7 @@ def dr_dvi(rot):
     vsqr = np.sum(np.square(rad))
     if vsqr < 1e-14:
         return np.stack([_cross_mat([1, 0, 0]), _cross_mat([0, 1, 0]),
-                         _cross_mat([0, 0, 1])])
+                        _cross_mat([0, 0, 1])])
 
     ire = np.eye(3) - rot
     res = np.stack([_cross_mat(rad)*r for r in rad])
@@ -212,7 +212,7 @@ def _jacobian_symbolic(cameras, matches):
         def drdv(xx_):
             """Differentiate different values w.r.t. the residuals."""
             return np.concatenate([xx_[0]*dpdh[2] + xx_[2]*dpdh[0],
-                                   xx_[1]*dpdh[2] + xx_[2]*dpdh[1]])
+                                xx_[1]*dpdh[2] + xx_[2]*dpdh[1]])
 
         # Jacobian
         # first camera
@@ -349,7 +349,7 @@ def traverse(imgs, matches, badjust="incr", use_straighten=True):
     """Traverse connected matches by visiting the best matches first."""
     # find starting point
     idx, homs, scores = zip(*[(i, *matches[i][j][1:3]) for i in matches.keys()
-                              for j in matches[i].keys()])
+                            for j in matches[i].keys()])
     src = idx[np.argmax(scores)]
     intr = intrinsics(np.median([get_focal(hom) for hom in homs]))
 

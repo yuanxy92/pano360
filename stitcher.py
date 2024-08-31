@@ -313,7 +313,7 @@ def stitch(regions, blender=no_blend, equalize=False, crop=False):
 
         # paste only valid pixels
         warped = cv2.remap(reg.img, x_pr[:, :, 0], x_pr[:, :, 1],
-                           cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
+                        cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
         warped[..., 3] = warped[..., 3] * (~mask)
         irange = np.s_[bottom[1]:top[1], bottom[0]:top[0]]
         patches.append((warped, mask, irange))
@@ -413,7 +413,7 @@ def main():
 
     name = f"{os.path.basename(os.path.normpath(args.path))}_s{args.shrink}"
     files = [f for f in os.listdir(args.path)
-             if any([f.endswith(ext) for ext in exts])]
+            if any([f.endswith(ext) for ext in exts])]
 
     imgs = [cv2.imread(os.path.join(args.path, f)) for f in files]
     if args.shrink > 1:
@@ -433,7 +433,7 @@ def main():
     except IOError:
         start = time.time()
         regions = traverse(imgs, idx_to_keypoints(matches, kpts),
-                           badjust=args.ba)
+                        badjust=args.ba)
         logging.info(f"Image registration, time: {time.time() - start}")
         with open(f"ba_{name}.pkl", 'wb') as fid:
             pickle.dump(regions, fid, protocol=pickle.HIGHEST_PROTOCOL)
